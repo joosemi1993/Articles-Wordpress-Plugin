@@ -1,0 +1,72 @@
+/**
+ * @package JosemiArticlesPlugin
+**/
+
+.art-container {
+    width: 1000px;
+    max-width: 100%;
+    position: relative;
+    margin: 0 auto;
+    padding: 20px 0;
+    position: relative;
+}
+
+.art-ind-cont {
+    width: 600px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.art-image {
+    height: 400px;
+    width: 100%;
+    background-position: 50%;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.art-content {
+    padding: 15px;
+}
+
+.art-title h2 {
+    margin-bottom: 0px;
+    font-size: 25px;
+    font-weight: 600;
+    color: #000;
+}
+
+.art-date span {
+    font-size: 11px;
+    font-style: italic;
+}
+
+.art-content-block {
+    margin-top: 15px;
+    font-size: 15px;
+}
+
+.art-navigation {
+    width: 400px;
+    max-width: 100%;
+    margin: 0 auto;
+    margin-bottom: 55px;
+}
+
+p.art-nav-buttons {
+    display: inline-block;
+}
+
+p.art-nav-buttons a {
+    padding: 10px 15px;
+    background-color: #ddd;
+    font-size: 15px;
+}
+
+.art-nav-next {
+    float: right;
+}
+
+.art-nav-buttons a {
+    color: #000;
+}

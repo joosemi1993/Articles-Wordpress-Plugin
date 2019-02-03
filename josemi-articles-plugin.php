@@ -2,7 +2,7 @@
 
 /**
  * @package JosemiArticlesPlugin
- */
+**/
 
 /*
 Plugin Name: Josemi Articles Plugin
@@ -153,6 +153,28 @@ function viewer_admin_page() {
     );
 }
 add_action( 'admin_menu', 'viewer_admin_page' );
+
+// Creating archive template for viewer post type
+function viewer_archive($template){
+    if(is_post_type_archive('viewer')){
+        $theme_files = array('archive-viewer.php');
+        $exists_in_theme = locate_template($theme_files, false);
+        if($exists_in_theme == ''){
+            return plugin_dir_path(__FILE__) . 'public/templates/archive-viewer.php';
+        }
+    }
+    return $template;
+}
+add_filter('archive_template','viewer_archive');
+
+// Force only 1 viewer per page
+function viewer_posts_per_page( $query ) {
+    if ( $query->query_vars['post_type'] == 'viewer' ) $query->query_vars['posts_per_page'] = 1;
+    return $query;
+}
+if ( !is_admin() ) add_filter( 'pre_get_posts', 'viewer_posts_per_page' );
+
+
 
 
 
