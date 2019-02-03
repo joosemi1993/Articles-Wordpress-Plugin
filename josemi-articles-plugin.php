@@ -99,3 +99,32 @@ function art_plug_custom_post_type()  {
 	flush_rewrite_rules();
 }
 add_action('init', 'art_plug_custom_post_type');
+
+// Creating Viewer Post Type Categories Taxonomy
+function create_viewer_taxonomies() {
+    $labels = array(
+        'name'              => _x( 'Viewer Categories', 'taxonomy general name' ),
+        'singular_name'     => _x( 'Viewer Category', 'taxonomy singular name' ),
+        'search_items'      => __( 'Search Viewer Categories' ),
+        'all_items'         => __( 'All Viewer Categories' ),
+        'parent_item'       => __( 'Parent Viewer Category' ),
+        'parent_item_colon' => __( 'Parent Viewer Category:' ),
+        'edit_item'         => __( 'Edit Viewer Category' ),
+        'update_item'       => __( 'Update Viewer Category' ),
+        'add_new_item'      => __( 'Add New Viewer Category' ),
+        'new_item_name'     => __( 'New Viewer Category Name' ),
+        'menu_name'         => __( 'Viewer Categories' ),
+    );
+
+    $args = array(
+        'hierarchical'      => true, // Set this to 'false' for non-hierarchical taxonomy (like tags)
+        'labels'            => $labels,
+        'show_ui'           => true,
+        'show_admin_column' => true,
+        'query_var'         => true,
+        'rewrite'           => array( 'slug' => 'viewer_categories' ),
+    );
+
+    register_taxonomy( 'viewer_categories', array( 'viewer' ), $args );
+}
+add_action( 'init', 'create_viewer_taxonomies', 0 );
