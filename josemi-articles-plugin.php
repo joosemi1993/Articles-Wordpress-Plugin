@@ -31,3 +31,19 @@ along with Josemi Articles Plugin. If not, see https://www.gnu.org/licenses/gpl-
 */
 
 defined( 'ABSPATH' ) or die( 'Hey, you can\t access this file, you silly human!');
+
+function activate() {	
+	// flush rewrite rules
+	flush_rewrite_rules();
+}
+
+function deactivate() {
+	// flush rewrite rules
+	flush_rewrite_rules();
+}
+
+// Activation
+register_activation_hook( __FILE__, 'activate' );
+
+// Deactivation
+register_deactivation_hook( __FILE__, 'deactivate' );
