@@ -177,3 +177,198 @@ function create_viewer_taxonomies() {
 }
 add_action( 'init', 'create_viewer_taxonomies', 0 );
 ```
+
+Then we enqueue the style and script files with the next code:
+```php
+// Enqueue Style and Scripts
+function art_viewer_scripts() {
+	wp_enqueue_style( 'art_style', plugins_url( 'public/assets/art_style.css', __FILE__ ) );
+	wp_enqueue_script('art_script', plugins_url( 'public/assets/art_script.js', __FILE__),'','',true);
+}
+add_action( 'wp_enqueue_scripts', 'art_viewer_scripts' );
+
+function art_viewer_admin_scripts() {
+	wp_enqueue_style( 'art_admin_style', plugins_url( 'admin/assets/art_admin_style.css', __FILE__ ) );
+}
+add_action( 'admin_enqueue_scripts', 'art_viewer_admin_scripts' );
+```
+Before that we have created the basic structure of the Plugin folder:
+- josemi-articles-plugin
+	+ admin
+		+ assets
+		+ templates
+	+ public
+		+ assets
+		+ templates
+	josemi-articles-plugin.php
+	uninstall.php
+
+Then we can create our admin page template and archive viewer page template. 
+
+```php
+// Creating admin page
+function viewer_admin_page() {
+    add_menu_page(
+       'Viewer Admin',
+       'Viewer_Admin',
+       'manage_options',
+        plugin_dir_path(__FILE__) . 'admin/templates/admin_page.php',
+        null,
+    	'dashicons-star-filled'
+    );
+}
+add_action( 'admin_menu', 'viewer_admin_page' );
+
+// Creating archive template for viewer post type
+function viewer_archive($template){
+    if(is_post_type_archive('viewer')){
+        $theme_files = array('archive-viewer.php');
+        $exists_in_theme = locate_template($theme_files, false);
+        if($exists_in_theme == ''){
+            return plugin_dir_path(__FILE__) . 'public/templates/archive-viewer.php';
+        }
+    }
+    return $template;
+}
+add_filter('archive_template','viewer_archive');
+```
+
+First one, in the admin page template we have to create the basic structure of the page, 
+with the categories form and the button to save our choice.
+
+```php
+<h1>Viewer Admin Panel</h1>
+
+<div class="category-selector">
+	<p>Please select a category to display in 'Viewer' page (ONLY ONE!):</p>
+<?php
+$taxonomy = 'viewer_categories';
+$terms = get_terms( $taxonomy ); // Get all terms of a taxonomy
+if ( $terms && !is_wp_error( $terms ) ) : ?>
+	<?php
+    // If form submit store the option category selected
+	if( isset( $_REQUEST['art_submit'] ) ) {
+       	$category_name = $_POST["category_value"];
+       	if ( $category_name == "" ) {
+       		update_option( 'art_category_selected', '' );
+       	} else {
+       		update_option( 'art_category_selected', $category_name );
+       	}
+    }
+    ?>
+    <form action="" method="POST">
+    	<label><input type="checkbox" name="category_value" value="All">All categories</label>
+        <?php foreach ( $terms as $term ) { ?>
+        	<?php 
+        	$term_name = $term->name;
+        	$term_slug = $term->slug;
+        	?>
+        	<label><input type="checkbox" name="category_value" value="<?php echo $term_slug; ?>"><?php echo $term_name; ?></label>
+        <?php } ?>
+        <input type="submit" value="Save" name="art_submit">
+    </form>
+<?php endif;?>
+	<?php $category_option_value = get_option( 'art_category_selected' ); ?>
+	<p class="category-selected">Now the category selected is: <span><?php echo $category_option_value; ?></span></p>
+</div>
+```
+Then the archive viewer page show us all the articles we have been created.
+But it only shows us one by one with next and previous button in the bottom 
+side to navigate between articles.
+
+```php
+get_header(); 
+global $wp_query, $wpdb, $paged;
+
+$category_option_value = get_option('art_category_selected');
+
+// If no category saved in admin panel we display all viewer post else only the viewers of the category selected
+$paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
+if (($category_option_value == '') || ($category_option_value == 'All')) {
+    $args = [
+        'post_type'         => 'viewer',
+        'posts_per_page'    => 1,
+        'order'             => 'DES',
+        'orderby'           => 'date',
+        'paged'             => $paged
+    ];
+} else {
+    $args = [
+        'post_type'       => 'viewer',
+        'posts_per_page'  =>  -1,
+        'order'           => 'DES',
+        'orderby'         => 'date',
+        'paged'             => $paged,
+        'tax_query'       => array(
+            array (
+                'taxonomy' => 'viewer_categories',
+                'field' => 'slug',
+                'terms' => $category_option_value,
+            )
+        )
+    ];
+}
+
+$query = new WP_Query( $args );
+// Creating the basic template
+?>
+<div class="art-container">
+	<div class="art-row">
+		<?php
+        if( $query->have_posts() ) :
+            while( $query->have_posts() ) : $query->the_post(); ?>
+                <?php
+                $post = get_post();
+                $post_title = get_the_title();
+                $post_content = get_the_content();
+                $post_image_url = get_the_post_thumbnail_url();
+                $post_date = get_the_date(); ?>
+           		<div class="art-slides fade">
+           			<div class="art-image" style="background-image: url(<?php echo $post_image_url; ?>)"></div>
+                    <div class="art-content">
+               			<div class="art-title"><h2><?php echo $post_title; ?></h2></div>
+               			<div class="art-date"><span><?php echo $post_date; ?></span></div>
+               			<div class="art-content-block"><p><?php echo $post_content; ?></p></div>
+                    </div>
+           		</div>
+           	<?php	
+                
+            endwhile;?>
+            <div class="art-navigation">
+                <p class="art-nav-buttons art-nav-previous"><?php echo get_previous_posts_link( '< Previous' ); ?></p>
+                <p class="art-nav-buttons art-nav-next"><?php echo get_next_posts_link( 'Next >', $query->max_num_pages ); ?></p>
+            </div>
+        <?php wp_reset_postdata();
+        endif; ?>
+	</div>
+</div>
+
+<?php 
+get_footer();
+```
+
+Finally to use the kewboard functionality to our articles navigation we have insert
+that in our public script file:
+
+```java
+jQuery(document).keypress(function(e){
+    var charCode = e.which;
+    if (charCode) {
+        var lowerCharStr = String.fromCharCode(charCode).toLowerCase();
+        // Detect the keywork
+        if (lowerCharStr == "j") {
+            // If j redirect to previous viewer
+            if( jQuery('.art-nav-previous a').length ) {
+			    var a_href = jQuery('.art-navigation').find('.art-nav-previous a').attr('href');
+			    window.location.href = a_href;
+			}
+        } else if (lowerCharStr == "k") {
+            // If k redirect to next viewer
+            if( jQuery('.art-nav-next a').length ) {
+			    var a_href = jQuery('.art-navigation').find('.art-nav-next a').attr('href');
+			    window.location.href = a_href;
+			}
+        }
+    }
+});
+```
