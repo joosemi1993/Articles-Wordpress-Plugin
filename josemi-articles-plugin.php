@@ -128,3 +128,16 @@ function create_viewer_taxonomies() {
     register_taxonomy( 'viewer_categories', array( 'viewer' ), $args );
 }
 add_action( 'init', 'create_viewer_taxonomies', 0 );
+
+// Enqueue Style and Scripts
+function art_viewer_scripts() {
+	wp_enqueue_style( 'art_style', plugins_url( 'public/assets/art_style.css', __FILE__ ) );
+	wp_enqueue_script('art_script', plugins_url( 'public/assets/art_script.js', __FILE__),'','',true);
+}
+add_action( 'wp_enqueue_scripts', 'art_viewer_scripts' );
+
+function art_viewer_admin_scripts() {
+	wp_enqueue_style( 'art_admin_style', plugins_url( 'admin/assets/art_admin_style.css', __FILE__ ) );
+}
+
+add_action( 'admin_enqueue_scripts', 'art_viewer_admin_scripts' );
