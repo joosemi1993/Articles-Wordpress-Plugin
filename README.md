@@ -43,7 +43,7 @@ as the plugin folder. In this file we create all the functionality of our plugin
 
 The first thing we have to do create a Plugin is to write this in the main file:
 
-```
+```php
 /*
 Plugin Name: Josemi Articles Plugin
 Plugin URI: https://github.com/joosemi1993/Articles-Wordpress-Plugin
@@ -75,7 +75,7 @@ It code define our Plugin.
 
 Then we define the activation and deactivation hooks:
 
-```
+```php
 function activate() {	
 	// flush rewrite rules
 	flush_rewrite_rules();
@@ -95,7 +95,7 @@ register_deactivation_hook( __FILE__, 'deactivate' );
 
 After that we have to create a new Custom Post Type and a new category taxonomy for the viewers articles:
 
-```
+```php
 // Creating the Custom Post Type Viewer
 function art_plug_custom_post_type()  {
 	$labels = [
