@@ -70,3 +70,9 @@ p.art-nav-buttons a {
 .art-nav-buttons a {
     color: #000;
 }
+
+@media (max-width: 414px) {
+    .art-navigation {
+        width: 280px;
+    }
+}
