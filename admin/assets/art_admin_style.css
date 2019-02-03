@@ -1,0 +1,35 @@
+.category-selector {
+    padding-top: 10px;
+}
+
+.category-selector p {
+    font-size: 16px;
+    margin: 0;
+    margin-bottom: 10px;
+}
+
+.category-selector label {
+    display: block;
+    padding: 10px;
+    font-size: 15px;
+}
+
+.category-selector input {
+    margin-right: 10px;
+}
+
+.category-selector input[type="submit"] {
+    background: #0073aa;
+    color: #fff;
+    font-size: 14px;
+    padding: 10px 25px;
+    margin-top: 10px;
+}
+
+p.category-selected {
+    font-size: 20px;
+}
+
+p.category-selected span {
+    font-weight: 700;
+}

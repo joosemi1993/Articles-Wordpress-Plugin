@@ -139,5 +139,28 @@ add_action( 'wp_enqueue_scripts', 'art_viewer_scripts' );
 function art_viewer_admin_scripts() {
 	wp_enqueue_style( 'art_admin_style', plugins_url( 'admin/assets/art_admin_style.css', __FILE__ ) );
 }
-
 add_action( 'admin_enqueue_scripts', 'art_viewer_admin_scripts' );
+
+// Creating admin page
+function viewer_admin_page() {
+    add_menu_page(
+       'Viewer Admin',
+       'Viewer_Admin',
+       'manage_options',
+        plugin_dir_path(__FILE__) . 'admin/templates/admin_page.php',
+        null,
+    	'dashicons-star-filled'
+    );
+}
+add_action( 'admin_menu', 'viewer_admin_page' );
+
+
+
+
+
+
+
+
+
+
+
