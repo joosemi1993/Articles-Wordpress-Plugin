@@ -193,15 +193,24 @@ function art_viewer_admin_scripts() {
 add_action( 'admin_enqueue_scripts', 'art_viewer_admin_scripts' );
 ```
 Before that we have created the basic structure of the Plugin folder:
-josemi-articles-plugin <br>
+
+josemi-articles-plugin
+
 	+ admin
+
 		+ assets
+
 		+ templates
+
 	+ public
+
 		+ assets
+
 		+ templates
+
 	josemi-articles-plugin.php
-	uninstall.php
+	
+	uninstall.php<br>
 
 Then we can create our admin page template and archive viewer page template. 
 
