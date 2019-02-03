@@ -167,7 +167,7 @@ function viewer_archive($template){
 }
 add_filter('archive_template','viewer_archive');
 
-// Force only 1 viewer per page
+// Filter to force only 1 viewer per page
 function viewer_posts_per_page( $query ) {
     if ( $query->query_vars['post_type'] == 'viewer' ) $query->query_vars['posts_per_page'] = 1;
     return $query;
