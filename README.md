@@ -193,7 +193,7 @@ function art_viewer_admin_scripts() {
 add_action( 'admin_enqueue_scripts', 'art_viewer_admin_scripts' );
 ```
 Before that we have created the basic structure of the Plugin folder:
-josemi-articles-plugin
+josemi-articles-plugin \n
 	+ admin
 		+ assets
 		+ templates
