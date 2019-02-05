@@ -28,7 +28,7 @@ if (($category_option_value == '') || ($category_option_value == 'All')) {
 } else {
     $args = [
         'post_type'       => 'viewer',
-        'posts_per_page'  =>  -1,
+        'posts_per_page'  =>  1,
         'order'           => 'DES',
         'orderby'         => 'date',
         'paged'             => $paged,
