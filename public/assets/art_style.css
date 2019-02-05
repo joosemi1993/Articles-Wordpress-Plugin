@@ -76,3 +76,29 @@ p.art-nav-buttons a {
         width: 280px;
     }
 }
+
+
+/************************************/
+/* NEW */
+
+.gallery-cell {
+  width: 100%;
+  height: auto;
+  margin-right: 10px;
+}
+
+/* cell number */
+.gallery-cell:before {
+  display: block;
+  text-align: center;
+  line-height: 200px;
+  font-size: 80px;
+}
+
+.flickity-prev-next-button {
+    top: 25% !important;
+}
+
+ol.flickity-page-dots {
+    display: none !important;
+}
