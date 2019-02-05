@@ -132,7 +132,9 @@ add_action( 'init', 'create_viewer_taxonomies', 0 );
 // Enqueue Style and Scripts
 function art_viewer_scripts() {
 	wp_enqueue_style( 'art_style', plugins_url( 'public/assets/art_style.css', __FILE__ ) );
+    wp_enqueue_style( 'flick_style', plugins_url( 'public/assets/flickity.css', __FILE__ ) );
 	wp_enqueue_script('art_script', plugins_url( 'public/assets/art_script.js', __FILE__),'','',true);
+    wp_enqueue_script('flick_script', plugins_url( 'public/assets/flickity.pkgd.min.js', __FILE__),'','',true);
 }
 add_action( 'wp_enqueue_scripts', 'art_viewer_scripts' );
 
