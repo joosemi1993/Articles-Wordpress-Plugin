@@ -71,15 +71,7 @@ p.art-nav-buttons a {
     color: #000;
 }
 
-@media (max-width: 414px) {
-    .art-navigation {
-        width: 280px;
-    }
-}
-
-
-/************************************/
-/* NEW */
+/* Gallery */
 
 .gallery-cell {
   width: 100%;
@@ -102,3 +94,33 @@ p.art-nav-buttons a {
 ol.flickity-page-dots {
     display: none !important;
 }
+
+@media (max-width: 991px) {
+    .flickity-prev-next-button {
+        top: 23% !important;
+    }
+}
+
+@media (max-width: 550px) {
+    .flickity-prev-next-button {
+        top: 19% !important;
+    }
+}
+
+@media (max-width: 414px) {
+    .art-navigation {
+        width: 280px;
+    }
+
+    .flickity-prev-next-button {
+        top: 15% !important;
+    }
+}
+
+@media (max-width: 320px) {
+    .flickity-prev-next-button {
+        top: 13% !important;
+    }
+}
+
+

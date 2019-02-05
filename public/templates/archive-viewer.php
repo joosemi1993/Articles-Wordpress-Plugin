@@ -54,7 +54,6 @@ if (($category_option_value == '') || ($category_option_value == 'All')) {
                 $post_date = get_the_date(); 
                 ?>
                 <div class="gallery-cell">
-                    <!--<div class="image-back" style="background-image: url(<?php echo $post_image_url; ?>); width: 100%; height: 600px; background-size: cover; background-position: 50%;"></div>-->
                     <div class="art-image" style="background-image: url(<?php echo $post_image_url; ?>)"></div>
                     <div class="art-content">
                         <div class="art-title"><h2><?php echo $post_title; ?></h2></div>
